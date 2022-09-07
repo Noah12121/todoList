@@ -5,14 +5,17 @@ import { getTodos, addTodo, deleteTodo } from './API'
 
 const App: React.FC = () => {
   const [todos, setTodos] = useState<ITodo[]>([])
-
+  let todos2: ITodo[]=[]
   useEffect(() => {
     fetchTodos()
   }, [])
 
   const fetchTodos = (): void => {
     getTodos()
-    .then(({ data: { todos } }: ITodo[] | any) => setTodos(todos))
+    .then(( todos  : ITodo[] | any) => {
+      todos2=[todos.data[0]];
+      console.log(todos.data)
+      console.log(todos2)})
     .catch((err: Error) => console.log(err))
   }
 
@@ -44,7 +47,7 @@ const App: React.FC = () => {
     <main className='App'>
       <h1>Noah Todos</h1>
       <AddTodo saveTodo={handleSaveTodo} />
-      {todos.map((todo: ITodo) => (
+      {todos2.map((todo: ITodo) => (
         <TodoItem
           key={todo._id}
           deleteTodo={handleDeleteTodo}
